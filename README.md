@@ -74,6 +74,14 @@ Avaa `web/index.html` koodieditorissa ja vaihda siitä nämä tekstit omiisi:
 
 Sivun värit ja pelin koko ovat tiedoston alussa `:root`-kohdassa. Pohjan peli on vaakasuuntainen. Jos teette pystysuuntaisen pelin, vaihtakaa `--game-width`- ja `--game-height`-arvot keskenään.
 
+### Favicon
+
+Favicon on pieni kuva, joka näkyy selaimen välilehdessä sivun nimen vieressä. Pohjassa on valmiina Roso Gamesin favicon:
+
+![Roso Gamesin favicon selaimen välilehdessä](docs/favicon-tab.png)
+
+Faviconin voi jättää ennalleen. Jos haluatte oman faviconin, korvatkaa `web`-kansion tiedostot `favicon.ico`, `favicon.svg`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192x192.png` ja `web-app-manifest-512x512.png` samannimisillä ja samankokoisilla kuvilla.
+
 ## Ongelmatilanteet
 
 - **Sivulla lukee "Peliä ei voitu ladata"**: `web/app`-kansiossa ei ole `index.html`-tiedostoa. Tarkista, että kopioit buildin tiedostot etkä koko `.html5`-kansiota. Tarkista myös, että puskit muutokset GitHubiin.
