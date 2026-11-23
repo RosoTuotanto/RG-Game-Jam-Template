@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Selaimen välilehdessä näkyvä nimi -->
+	<title>Pelin nimi</title>
+	<meta name="description" content="Lyhyt kuvaus pelistä.">
+
+	<style>
+		:root {
+			/* Sivun värit */
+			--background-color: #14161c;
+			--text-color: #f2f2f2;
+			--muted-text-color: #a9adb8;
+			--frame-color: #000000;
+
+			/* Pelin koko. Tämän pitää vastata pelin config.lua-tiedostoa: vaakasuuntaisessa pelissä leveys on config.lua:n height ja korkeus sen width. */
+			--game-width: 960;
+			--game-height: 640;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			min-height: 100vh;
+			background: var(--background-color);
+			color: var(--text-color);
+			font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			line-height: 1.5;
+		}
+
+		main {
+			max-width: calc(var(--game-width) * 1px);
+			margin: 0 auto;
+			padding: 32px 16px;
+		}
+
+		h1 {
+			margin: 0 0 8px;
+			font-size: 2rem;
+		}
+
+		p {
+			margin: 0 0 8px;
+			color: var(--muted-text-color);
+		}
+
+		.game {
+			position: relative;
+			width: 100%;
+			aspect-ratio: var(--game-width) / var(--game-height);
+			margin-top: 24px;
+			background: var(--frame-color);
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		.game iframe {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 0;
+		}
+
+		.game iframe[hidden] {
+			display: none;
+		}
+
+		.game-error {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
+			text-align: center;
+			color: var(--text-color);
+		}
+
+		.game-error[hidden] {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Pelin nimi</h1>
+		<p>Lyhyt kuvaus pelistä.</p>
+		<p>Tekijät: Nimi 1, Nimi 2, Nimi 3</p>
+
+		<div class="game">
+			<iframe id="game-frame" title="Peli" allow="autoplay; fullscreen; gamepad" hidden></iframe>
+			<div id="game-error" class="game-error" hidden>Peliä ei voitu ladata, koska web/app-kansiosta ei löytynyt index.html-tiedostoa.</div>
+		</div>
+	</main>
+
+	<script>
+		// Peli ladataan vain, jos app/index.html löytyy, koska iframe ei kerro puuttuvasta sivusta.
+		const gameFrame = document.getElementById("game-frame");
+		const gameError = document.getElementById("game-error");
+
+		async function loadGame() {
+			try {
+				const response = await fetch("app/index.html", { method: "HEAD", cache: "no-store" });
+
+				if (!response.ok) {
+					throw new Error(`app/index.html returned ${response.status}`);
+				}
+
+				gameFrame.src = "app/index.html";
+				gameFrame.hidden = false;
+			} catch (error) {
+				console.error(error);
+				gameError.hidden = false;
+			}
+		}
+
+		loadGame();
+	</script>
+</body>
+</html>

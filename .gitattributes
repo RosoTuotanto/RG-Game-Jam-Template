@@ -1,0 +1,7 @@
+* text=auto
+
+# Solar2D HTML5 build files and images
+*.bin binary
+*.data binary
+*.wasm binary
+*.png binary
